@@ -1,0 +1,20 @@
+{  
+    "comentario": [
+     "Funções válidas:",
+
+     "update_atributo - atualização de atributo na ficha",
+     "r - rolagem de dados",
+     "# - chamada de efeito sonoro",
+     "my - busca um atributo na ficha",
+     "myself - monta um painel com os atributos principais da ficha ",
+     "play - ativa bot para efeitos sonoros"
+    
+    ],
+
+    "update_atributo": ["att", "update", "upd"],
+    "r": [],
+    "#": [],
+    "my": ["meu", "minha"],
+    "myself": ["persona", "self"],
+    "play": []
+}

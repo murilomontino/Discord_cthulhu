@@ -1,51 +1,23 @@
 import json
 from abc import abstractmethod
+from d20 import roll
+from template import TEMPLATE_SHEET
+from ficha_rpg import FICHA
 
+# classe TEMPLATE DE FICHAS
+# PADRONIZANDO TODAS AS FICHAS DE TAL MANEIRA QUE SEJA POSSÌVEL ADICIONAR O MAIOR NÚMERO DE SISTEMAS POSSÌVEIS DE RPG
+# DE MANEIRA FÁCIL E PRATICA
+class TypeSheet(object):
 
-class TypeSheet:
+    def __init__(self):
+        self.template_sheet = TEMPLATE_SHEET
+        self.FICHA = FICHA
 
-    def __init__(self, tipo_ficha: str, nome_jogador: str, nome_ficha: str):
-        with open(tipo_ficha, 'r') as json_file:
-            self._sheet_ = json.load(json_file)
-        self._sheet_ = self._sheet_[nome_ficha]
-        self._sheet_['nome_jogador'] = nome_jogador
+    #FUNCAO QUE MONTARÁ O PAINEL COM AS PRINCIPAIS CARACTERISTICAS DO PERSONAGEM DO JOGADOR
+    def painel_do_jogador(self, cls, player):
+        return self.FICHA[cls].painel_do_jogador(player)
 
+    #PRINCIPAL ROLAGEM DE DADOS DO SISTEMA
+    def rolagem_principal(self, cls):
+        return self.FICHA[cls].rolagem_principal()
 
-    def get_sheet_value(self, value: str) -> str:
-
-        if value in self._sheet_:
-            return self._sheet_[value]
-        else:
-            return 'Elemento inválido'
-
-
-    def set_sheet_value(self, value: str, new_value: str):
-        if value in self._sheet_:
-            self._sheet_[value] = new_value
-        else:
-            return 'Elemento não-adicionado'
-
-    @abstractmethod
-    def embed_player(self):
-        pass
-
-    def D3(self, quant: int = 1):
-        pass
-
-    def D6(self, quant: int = 1):
-        pass
-
-    def D8(self, quant: int = 1):
-        pass
-
-    def D10(self, quant: int = 1):
-        pass
-
-    def D12(self, quant: int = 1):
-        pass
-
-    def D20(self, quant: int = 1):
-        pass
-
-    def D100(self, quant: int = 1):
-        pass

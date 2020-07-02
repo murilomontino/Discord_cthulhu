@@ -1,0 +1,26 @@
+{
+    "my":{ 
+       "help": "Busca um atributo de sua ficha, o atributo deve ser especificado",
+       "brief": "Busca atributo",
+       "description": ""
+    },
+    
+    "update_atributo": {
+        "help": "Atualiza um atributo de sua ficha, o atributo deve ser especificado",
+        "brief": "Atualizar atributo",
+        "description": ""
+    },
+    "myself": {
+        "help": "Constroi um painel com as caracteristicas principais do personagem",
+        "brief": "Painel de caracteristicas",
+        "description": ""
+    },
+    "r": {
+        "help": "Rolagem de dados principal do sistema",
+        "brief": "Rolagem de dados",
+        "description": ""
+    }
+
+
+
+}

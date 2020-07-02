@@ -1,19 +1,34 @@
 import discord
-from discord.ext import commands
+import pymongo
 
-import DiscordAppBot
+from d20 import roll
+from cogs import painel, identidade
+from ficha_rpg.TypeSheet import TypeSheet
+from discord.ext import commands
 
 class Dados(commands.Cog):
 
-    def __init__(self, client: DiscordAppBot):
+    def __init__(self, client: discord.AutoShardedClient):
+        # Cliente Discord
         self._client = client
+        self.database = self._client.database
+
+
+        # Ponteiros de funções uteis, para facilitar o uso e diminuir a poluição do código
+        self.ficha = TypeSheet()
 
     @commands.cooldown(1, 2, commands.BucketType.user)
-    @commands.command()
-    async def dado(self, message:discord.User):
-        rollem: discord.User = self._client.get_user(240732567744151553)
-        await message.send(content=f'{rollem.mention} d20', tts=False, embed=None, file=None, files=None, delete_after=None,
-                           nonce=None, allowed_mentions=discord.AllowedMentions())
+    @commands.command(name='r')
+    async def rolagem_principal(self, message:discord.message, atributo=None, *, lixo=None):
+
+        nome, _id, tipo = identidade(message, self.database)
+        await message.channel.send('teste bem sucedido')
+
+        if atributo== None:
+            await message.channel.send(embed=painel(self.ficha.rolagem_principal(cls=tipo), author=nome))
+
+
+
 
 def setup(client):
     client.add_cog(Dados(client))

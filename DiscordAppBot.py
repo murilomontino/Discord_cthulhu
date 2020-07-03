@@ -51,7 +51,7 @@ class DiscordAppBot(AutoShardedBot):
 
     def new_comandos(self):
         novos_comandos = dict()
-        with open(".\\database_json\\command.json", 'r') as json_file:
+        with open("./database_json/command.json", 'r') as json_file:
             novos_comandos = json.load(json_file)
         del (novos_comandos['comentario'])
         for nome in novos_comandos:

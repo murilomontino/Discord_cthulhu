@@ -8,7 +8,7 @@ class Efeito_Sonoro(commands.Cog):
 
     def __init__(self, client):
         self._client = client
-        with open('.\\database_json\\efeito_sonoro.json', 'r') as json_file:
+        with open('./database_json/efeito_sonoro.json', 'r') as json_file:
             self.link_efeito_sonoro = json.load(json_file)
     
     @commands.command()

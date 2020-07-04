@@ -12,7 +12,6 @@ class DiscordAppBot(AutoShardedBot):
     def __init__(self):
         super().__init__(command_prefix='!', case_insensitive=True)
         self.muted = set()
-        self.all_commands 
         self._database = pymongo.MongoClient('mongodb+srv://murilomontiono:'
                                              'kingdom2012@rpgsheets-ofr2t.gcp.mongodb.net/'
                                              'rpg?retryWrites=true&w=majority')['RPG']['sheets']
@@ -32,6 +31,10 @@ class DiscordAppBot(AutoShardedBot):
     def comandos(self):
         return self._comandos
 
+    async def on_guild_join(self,guild):
+        print(guild.id)
+        return
+
     async def process_commands(self, message):
         
         if message.author.bot:
@@ -49,6 +52,24 @@ class DiscordAppBot(AutoShardedBot):
         self.new_comandos()
         await self.change_presence(activity=discord.Streaming(name='!help', url='www.google.com.br'))
 
+    async def on_message(self, message):
+
+        if message.author.id in self.muted:
+            return
+
+        if message.content.startswith('#'):  # efeitos_sonoros serão chamados
+            message.content = f"{self.command_prefix}# " + message.content
+            await self.process_commands(message)
+            return
+
+        try:
+            rolagem = roll(message.content, message.author)
+            await message.channel.send(embed=rolagem)
+        except:
+            await self.process_commands(message)
+        finally:
+            return
+            
     def new_comandos(self):
         novos_comandos = dict()
         with open("./database_json/command.json", 'r') as json_file:
@@ -69,36 +90,13 @@ class DiscordAppBot(AutoShardedBot):
         return
 
 
-
-
-
-
-
-
 TOKEN = "NzE1NjgyMDcxOTQyNTI5MTM0.XuW_-w.UGFoK5PZ38PADlRy3qyrNGJk_1Q"
 MODULOS = ['cogs.comandos', 'cogs.database', 'cogs.dados', 'cogs.efeitos_sonoros']
 CLIENT = DiscordAppBot()
 
 
 
-@CLIENT.event
-async def on_message(message):
 
-    if message.author.id in CLIENT.muted:
-        return
-
-    if message.content.startswith('#'): #efeitos_sonoros serão chamados
-        message.content = f"{CLIENT.command_prefix}# " + message.content
-        await CLIENT.process_commands(message)
-        return
-    
-    try:
-        rolagem = roll(message.content, message.author)
-        await message.channel.send(embed=rolagem)
-    except:
-        await CLIENT.process_commands(message)
-    finally:
-        return
 
 for modulo in MODULOS:
     CLIENT.load_extension(modulo)

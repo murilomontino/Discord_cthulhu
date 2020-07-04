@@ -57,7 +57,7 @@ def criando_comandos(caminhos: list, ultimo_comando=None ) -> dict:
         print(caminhos[contador])
         start = input("Digite o comando: \n "
                       " break -> para parar \n "
-                      " prox -> pra o próximo comanod \n")
+                      " prox -> pra o próximo comanod \n ")
 
         if start == "prox":
             contador += 1

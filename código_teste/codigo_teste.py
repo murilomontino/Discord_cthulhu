@@ -3,9 +3,11 @@ import json
 import os
 import discord
 from discord.ext.commands import AutoShardedBot, when_mentioned_or
-
 from abc import abstractmethod
 from d20 import roll
+
+
+
 
 class DiscordAppBot(AutoShardedBot):
     

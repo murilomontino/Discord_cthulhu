@@ -6,6 +6,10 @@ FICHAS_IN_GAME = {
 
 }
 
+CONFIG = {
+    
+}
+
 COMANDOs = COMANDO
 
 def painel(description, author='CTHULHU', image="https://cdn.imgbin.com/7/11/13/"

@@ -1,6 +1,9 @@
 {
-    "config": "default",
-    "command_prefix": "!",
-    "language": "pt-br"
-
+    "id_group_config":{
+        "command_prefix": "!",
+        "music_prefix": "#",
+        "language": "pt-br",
+        "personagens": "id_categoria",
+        "canal_config": "id_canal"
+    }
 }

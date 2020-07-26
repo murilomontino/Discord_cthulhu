@@ -31,14 +31,43 @@ emoji = {
     "dinheiro": "💲",
 }
 
-# [{menu1}, {menu2}, {menu3}, {menu4}]
+emoji_number = {
+    "0️⃣": 0,
+    "1️⃣": 1,
+    "2️⃣": 2,
+    "3️⃣": 3 ,
+    "4️⃣": 4,
+    "5️⃣": 5,
+    "6️⃣": 6,
+    "7️⃣": 7,
+    "8️⃣": 8,
+    "9️⃣": 9,
+    "🔟": 10
+}
+
+
 database = pymongo.MongoClient('mongodb+srv://murilomontiono:'
                                      'kingdom2012@rpgsheets-ofr2t.gcp.mongodb.net/'
                                      'rpg?retryWrites=true&w=majority')['RPG']['sheets']
 
-def create_menu():
-    template = database.find_one({'template':'cthulhu_7e'}, {'template':0})
-    pass
+def create_menu(author='CTHULHU', image="https://cdn.imgbin.com/7/11/13/"
+           "imgbin-cthulhu-lovecraftian-horror-computer-icons-rpg-maker-mv-others"
+           "-e3H7mww7JVhF6Bhu2UPgNvhzp.jpg"):
+
+    painel : discord.Embed = discord.Embed()
+    painel.set_author(name=author, icon_url=image)
+    
+    menu = dict()
+    template = database.find_one({'template':'cthulhu_7e'}, {'_id':0, 'template':0})
+    description = ""
+    
+    for indice, option in zip(emoji_number, template):
+        description += f"{indice} {option} \n"
+        menu[emoji_number[indice]] = option
+
+    painel.description = description
+
+    return (menu, painel)
 
 def painel(description, author='CTHULHU', image="https://cdn.imgbin.com/7/11/13/"
            "imgbin-cthulhu-lovecraftian-horror-computer-icons-rpg-maker-mv-others"
@@ -48,31 +77,9 @@ def painel(description, author='CTHULHU', image="https://cdn.imgbin.com/7/11/13/
     embed.set_author(name=author, icon_url=image)
     embed.description = description
     
-    embed.add_field(name='Teste', value=5, inline=True)
-    
-    for indice, field in enumerate(embed._fields):
-        print(indice)
-
     return embed
 
-
-class MyMenu(menus.Menu):
-    
-    async def send_initial_message(self, ctx, channel):
-        return await channel.send(f'Hello {ctx.author}')
-
-    @menus.button(emoji=emoji['0'])
-    async def on_digit_zero(self, payload):
-        await self.message.edit(content=f'Thanks {self.ctx.author}!')
-
-    @menus.button(emoji=emoji['1'])
-    async def on_thumbs_down(self, payload):
-        await self.message.edit(content=f"That's not nice {self.ctx.author}...")
-
-    @menus.button(emoji=emoji['2'])
-    async def on_two(self, payload):
-        await self.message.edit(content=f"That's not nice {self.ctx.author}...")
-
+class MenuConfirmation(menus.Menu):
     @menus.button(emoji=emoji['confirmar'])
     async def confirmar(self, payload):
         await self.message.edit(content=f"That's not nice {self.ctx.author}...")
@@ -88,11 +95,7 @@ class Comandos(commands.Cog):
     def __init__(self, client: discord.Client):
         self._client = client
     
-    @commands.command(name='menu')
-    async def menu_example(self, ctx):
-        m = MyMenu()
-        await m.start(ctx)
-    
+
     @commands.guild_only()
     @commands.command(name='create')
     async def create(self, message):
@@ -125,6 +128,11 @@ class Comandos(commands.Cog):
 
         channel = await guild.create_text_channel('secret', overwrites=overwrites)
 
+    @commands.command(name="teste")
+    async def t(self, message):
+        menu, embed = create_menu()
+        print(menu)
+        await message.channel.send(embed=embed)
 
     @commands.dm_only()
     @commands.command(name='tumb')

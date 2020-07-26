@@ -16,9 +16,6 @@ emoji = {
     "editar": "🔵",
 
     "dinheiro": "💲",
-}
-
-emoji_number = {
     "0": "0️⃣",
     "1": "1️⃣",
     "2": "2️⃣",
@@ -32,16 +29,37 @@ emoji_number = {
     "10": "🔟"
 }
 
+emoji_number = {
+    "0️⃣": 0,
+    "1️⃣": 1,
+    "2️⃣": 2,
+    "3️⃣": 3 ,
+    "4️⃣": 4,
+    "5️⃣": 5,
+    "6️⃣": 6,
+    "7️⃣": 7,
+    "8️⃣": 8,
+    "9️⃣": 9,
+    "🔟": 10
+}
+
+template = database.find_one({'template': 'cthulhu_7e'}, {'template': 0, '_id': 0})
+
+def createMenu(template):
+    
+    pass
+
+# [{menu1}, {menu2}, {menu3}, {menu4}]
+
 database = pymongo.MongoClient('mongodb+srv://murilomontiono:'
                                'kingdom2012@rpgsheets-ofr2t.gcp.mongodb.net/'
                                'rpg?retryWrites=true&w=majority')['RPG']['sheets']
 
-template = database.find_one({'template': 'cthulhu_7e'}, {'template': 0, '_id': 0})
 
 
 
 def main():
-    print(emoji_number.get('7️⃣', 'valor inválido') )
+    pass
 
 if __name__ == "__main__":
     main()

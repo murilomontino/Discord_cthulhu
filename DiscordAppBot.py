@@ -2,7 +2,7 @@ import random
 import json
 import discord
 import pymongo
-
+from config import config
 from cogs import roll
 
 from discord.ext.commands import AutoShardedBot, when_mentioned_or
@@ -10,15 +10,10 @@ from discord.ext.commands import AutoShardedBot, when_mentioned_or
 class DiscordAppBot(AutoShardedBot):
 
     def __init__(self):
-        super().__init__(command_prefix='!', case_insensitive=True)
+        super().__init__(command_prefix=config.prefix, case_insensitive=True)
         self.muted = set()
-        self._database = pymongo.MongoClient('mongodb+srv://murilomontiono:'
-                                             'kingdom2012@rpgsheets-ofr2t.gcp.mongodb.net/'
-                                             'rpg?retryWrites=true&w=majority')['RPG']['sheets']
-    
-        self._comandos = pymongo.MongoClient('mongodb+srv://murilomontiono:'
-                                             'kingdom2012@rpgsheets-ofr2t.gcp.mongodb.net/'
-                                             'rpg?retryWrites=true&w=majority')['RPG']['comandos']
+        self._database = pymongo.MongoClient(config.database)['RPG']['sheets']
+        self._comandos = pymongo.MongoClient(config.database)['RPG']['comandos']
 
     def all_comandos(self):
         return self.all_commands
@@ -90,8 +85,8 @@ class DiscordAppBot(AutoShardedBot):
         return
 
 
-TOKEN = "NzE1NjgyMDcxOTQyNTI5MTM0.XuW_-w.UGFoK5PZ38PADlRy3qyrNGJk_1Q"
-MODULOS = ['cogs.comandos', 'cogs.database', 'cogs.dados', 'cogs.efeitos_sonoros']
+TOKEN = config.token
+MODULOS = config.modulos
 CLIENT = DiscordAppBot()
 
 

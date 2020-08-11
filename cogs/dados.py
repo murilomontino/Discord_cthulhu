@@ -12,9 +12,6 @@ class Dados(commands.Cog):
         # Cliente Discord
         self._client = client
         self.database = self._client.database
-
-
-        # Ponteiros de funções uteis, para facilitar o uso e diminuir a poluição do código
         self.ficha = TypeSheet()
 
     @commands.cooldown(1, 2, commands.BucketType.user)

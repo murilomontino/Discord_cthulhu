@@ -1,7 +1,7 @@
 import json
 
 var_help = dict()
-with open('./database_json/help.json', 'r') as json_file:
+with open('DiscordAppBot/database_json/help.json', 'r') as json_file:
     var_help = json.load(json_file)
 
 def helping(nome_comando):
@@ -23,4 +23,3 @@ def description(nome_comando):
         return
 
 
-        
